@@ -1,5 +1,6 @@
 #include <iostream>
 #include "uzytkownicy.h"
+#include "rekordy_w_Ksiazce_adresowej.h"
 #include <cstdlib>
 #include <windows.h>
 #include <cstdio>
@@ -13,11 +14,13 @@ using namespace std;
 
 
 int main(){
-//  vector <Adresat> ksiazkaAdresowa;
+    vector <Adresat> ksiazkaAdresowa;
     vector <Uzytkownik> daneDoLogowania;
-    Uzytkownik osoba;
 
-    //int wybor=0;
+    Adresat osobaZKsiazkiAdresowej(0,0,"","","","","");
+    Uzytkownik osoba (0, "", "");
+
+    int wybor=0;
     int idUzytkownika=0;
 
     while (osoba.wczytajUzytkownikowProgramu(daneDoLogowania, idUzytkownika)==true){
@@ -25,7 +28,7 @@ int main(){
     }
 
 
-   /* while (1){
+    while (1){
         system ("cls");
         cout << "Witaj w ksiazce adresowej. Co chcesz zrobic?"<<endl;
         cout << "1. Logowanie"<<endl;
@@ -34,8 +37,8 @@ int main(){
         cin>>wybor;
 
         if (wybor == 1){
-            idUzytkownika = logowanie(daneDoLogowania);
-            wczytajOsobyZPlikuDlaDanegoUzytkownika(ksiazkaAdresowa, idUzytkownika);
+            idUzytkownika = osoba.logowanie(daneDoLogowania);
+            osobaZKsiazkiAdresowej.wczytajOsobyZPlikuDlaDanegoUzytkownika(ksiazkaAdresowa, idUzytkownika);
             while (idUzytkownika!=0){
                 system ("cls");
                 cout << "1. Wprowadzenie nowej osoby do ksiazki"<<endl;
@@ -46,7 +49,7 @@ int main(){
                 cout << "6. Wyloguj"<<endl;
                 cin >> wybor;
                 if (wybor == 1){
-                    wprowadzanieNowychOsobDoKsiazki(ksiazkaAdresowa, idUzytkownika);
+                    osobaZKsiazkiAdresowej.wprowadzanieNowychOsobDoKsiazki(ksiazkaAdresowa, idUzytkownika);
                 } else if (wybor == 2){
                     while (1){
                         int wybor2;
@@ -60,11 +63,11 @@ int main(){
                         cin >> wybor2;
 
                         if (wybor2 == 1){
-                            wyszukiwaniePoImieniu (ksiazkaAdresowa);
+                            osobaZKsiazkiAdresowej.wyszukiwaniePoImieniu (ksiazkaAdresowa);
                         } else if (wybor2 == 2){
-                            wyszukiwaniePoNazwisku (ksiazkaAdresowa);
+                            osobaZKsiazkiAdresowej.wyszukiwaniePoNazwisku (ksiazkaAdresowa);
                         } else if (wybor2 == 3){
-                            pokazWszystkich (ksiazkaAdresowa);
+                            osobaZKsiazkiAdresowej.pokazWszystkich (ksiazkaAdresowa);
                         } else if (wybor2 == 9){
                             break;
                         }else {
@@ -73,23 +76,24 @@ int main(){
                         }
                     }
                 } else if (wybor == 3){
-                    usuwanieRekorduZPliku (ksiazkaAdresowa, idUzytkownika);
+                    osobaZKsiazkiAdresowej.usuwanieRekorduZPliku (ksiazkaAdresowa, idUzytkownika);
                 } else if (wybor == 4){
-                    edytujRekord(ksiazkaAdresowa, idUzytkownika);
+                    osobaZKsiazkiAdresowej.edytujRekord(ksiazkaAdresowa, idUzytkownika);
                 } else if (wybor == 5){
-                    zmianaHasla(daneDoLogowania, idUzytkownika);
+                    osoba.zmianaHasla(daneDoLogowania, idUzytkownika);
                 } else if (wybor == 6){
                     idUzytkownika=0;
                     cout << "Wylogowano.";
                     Sleep(3000);
+                    break;
                 } else {
                     cout << "Podano zly numer, wybierz ponownie."<<endl;
                     Sleep(2500);
                 }
             }
-        } else if (wybor == 2){
-            rejestracja(daneDoLogowania);
-        } else if (wybor == 3){
+        }  else if (wybor == 2){
+            osoba.rejestracja(daneDoLogowania);
+        }  else if (wybor == 3){
             cout << "Dziekuje za skorzystanie z ksiazki adresowej. Do zobaczenia."<<endl;
             Sleep(2500);
             exit(0);
@@ -97,7 +101,7 @@ int main(){
             cout << "Podano zly numer, wybierz ponownie."<<endl;
             Sleep(2500);
         }
-    }*/
+    }
     return 0;
 }
 
