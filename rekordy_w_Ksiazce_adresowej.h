@@ -19,6 +19,7 @@ int okreslID (vector <Adresat> &ksiazkaAdresowa, int idUzytkownika);
 void wczytajWszystkieOsobyZPliku (vector <Adresat> &ksiazkaAdresowa);
 void zapiszOsobyDoPliku (Adresat osoba, vector <Adresat> &ksiazkaAdresowa);
 void zapiszOsobyDoPlikuNadpisujacPlik (vector <Adresat> &ksiazkaAdresowa, int idUzytkownika);
+void zaktualizujRekordwKsiazceAdresowej (vector <Adresat> &ksiazkaAdresowa, int idWybranegoAdresata, int wybor);
 
 public:
 Adresat (int , int , string , string, string, string, string);

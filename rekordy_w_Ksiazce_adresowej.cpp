@@ -416,6 +416,55 @@ void Adresat::zapiszOsobyDoPlikuNadpisujacPlik (vector <Adresat> &ksiazkaAdresow
     wczytajOsobyZPlikuDlaDanegoUzytkownika (ksiazkaAdresowa, idUzytkownika);
 }
 
+void Adresat::zaktualizujRekordwKsiazceAdresowej (vector <Adresat> &ksiazkaAdresowa, int idWybranegoAdresata, int wybor){
+    wczytajWszystkieOsobyZPliku (ksiazkaAdresowa);
+    for (vector <Adresat>::iterator itr = ksiazkaAdresowa.begin(); itr <= ksiazkaAdresowa.end(); itr++){
+        if (itr -> id == idWybranegoAdresata){
+            switch (wybor){
+                case '1':
+                    cout << "Podaj nowe imie: ";
+                    cin >> itr -> imie;
+                    itr -> imie = zamienWielkoscLiter(itr -> imie);
+                    cout << endl << "Imie zostalo zmienione" << endl << endl;
+                    zapiszOsobyDoPlikuNadpisujacPlik(ksiazkaAdresowa, idUzytkownika);
+                    break;
+                case '2':
+                    cout << "Podaj nowe nazwisko: ";
+                    cin >> itr -> nazwisko;
+                    itr -> nazwisko = zamienWielkoscLiter(itr -> nazwisko);
+                    cout << endl << "Nazwisko zostalo zmienione" << endl << endl;
+                    zapiszOsobyDoPlikuNadpisujacPlik(ksiazkaAdresowa, idUzytkownika);
+                    break;
+                case '3':
+                    cout << "Podaj nowy numer telefonu: ";
+                    cin >> itr -> numerTelefonu;
+                    cout << endl << "Numer telefonu zostal zmieniony" << endl << endl;
+                    zapiszOsobyDoPlikuNadpisujacPlik(ksiazkaAdresowa, idUzytkownika);
+                    break;
+                case '4':
+                    cout << "Podaj nowy email: ";
+                    cin >> itr -> email;
+                    cout << endl << "Email zostal zmieniony" << endl << endl;
+                    zapiszOsobyDoPlikuNadpisujacPlik(ksiazkaAdresowa, idUzytkownika);
+                    break;
+                case '5':
+                    cout << "Podaj nowy adres zamieszkania: ";
+                    cin >> itr -> adres;
+                    itr -> adres = zamienWielkoscLiter(itr -> adres);
+                    cout << endl << "Adres zostal zmieniony" << endl << endl;
+                    zapiszOsobyDoPlikuNadpisujacPlik(ksiazkaAdresowa, idUzytkownika);
+                    break;
+                case '9':
+                    cout << endl << "Powrot do menu glownego" << endl << endl;
+                    break;
+                default:
+                    cout << endl << "Nie ma takiej opcji w menu! Powrot do menu glownego." << endl << endl;
+                    break;
+                }
+            }
+        }
+}
+
 void Adresat::edytujRekord (vector <Adresat> &ksiazkaAdresowa, int idUzytkownika){
     int idWybranegoAdresata = 0;
     char wybor;
@@ -423,8 +472,7 @@ void Adresat::edytujRekord (vector <Adresat> &ksiazkaAdresowa, int idUzytkownika
 
     system("cls");
     if (!ksiazkaAdresowa.empty())
-    {
-        cout << "Podaj numer ID osoby do edycji: ";
+    {   cout << "Podaj numer ID osoby do edycji: ";
         cin >> idWybranegoAdresata;
 
         if (cin.fail())
@@ -434,7 +482,7 @@ void Adresat::edytujRekord (vector <Adresat> &ksiazkaAdresowa, int idUzytkownika
             cin.sync();
         }
         else
-        {wczytajWszystkieOsobyZPliku (ksiazkaAdresowa);
+        {
             for (vector <Adresat>::iterator itr = ksiazkaAdresowa.begin(); itr <= ksiazkaAdresowa.end(); itr++)
             {
                 if (itr -> id == idWybranegoAdresata)
@@ -450,48 +498,8 @@ void Adresat::edytujRekord (vector <Adresat> &ksiazkaAdresowa, int idUzytkownika
                     cout << "9. Cofnij"<<endl;
                     cin >> wybor;
 
-                    switch (wybor)
-                    {
-                    case '1':
-                        cout << "Podaj nowe imie: ";
-                        cin >> itr -> imie;
-                        itr -> imie = zamienWielkoscLiter(itr -> imie);
-                        cout << endl << "Imie zostalo zmienione" << endl << endl;
-                        zapiszOsobyDoPlikuNadpisujacPlik(ksiazkaAdresowa, idUzytkownika);
-                        break;
-                    case '2':
-                        cout << "Podaj nowe nazwisko: ";
-                        cin >> itr -> nazwisko;
-                        itr -> nazwisko = zamienWielkoscLiter(itr -> nazwisko);
-                        cout << endl << "Nazwisko zostalo zmienione" << endl << endl;
-                        zapiszOsobyDoPlikuNadpisujacPlik(ksiazkaAdresowa, idUzytkownika);
-                        break;
-                    case '3':
-                        cout << "Podaj nowy numer telefonu: ";
-                        cin >> itr -> numerTelefonu;
-                        cout << endl << "Numer telefonu zostal zmieniony" << endl << endl;
-                        zapiszOsobyDoPlikuNadpisujacPlik(ksiazkaAdresowa, idUzytkownika);
-                        break;
-                    case '4':
-                        cout << "Podaj nowy email: ";
-                        cin >> itr -> email;
-                        cout << endl << "Email zostal zmieniony" << endl << endl;
-                        zapiszOsobyDoPlikuNadpisujacPlik(ksiazkaAdresowa, idUzytkownika);
-                        break;
-                    case '5':
-                        cout << "Podaj nowy adres zamieszkania: ";
-                        cin >> itr -> adres;
-                        itr -> adres = zamienWielkoscLiter(itr -> adres);
-                        cout << endl << "Adres zostal zmieniony" << endl << endl;
-                        zapiszOsobyDoPlikuNadpisujacPlik(ksiazkaAdresowa, idUzytkownika);
-                        break;
-                    case '9':
-                        cout << endl << "Powrot do menu glownego" << endl << endl;
-                        break;
-                    default:
-                        cout << endl << "Nie ma takiej opcji w menu! Powrot do menu glownego." << endl << endl;
-                        break;
-                    }
+                    zaktualizujRekordwKsiazceAdresowej(ksiazkaAdresowa, idWybranegoAdresata, wybor);
+                    wczytajOsobyZPlikuDlaDanegoUzytkownika(ksiazkaAdresowa, idUzytkownika);
                 }
             }
             if (czyIstniejeAdresat == false)
