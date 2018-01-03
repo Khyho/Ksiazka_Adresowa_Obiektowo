@@ -20,7 +20,7 @@ Uzytkownik::Uzytkownik (int i, string log, string pas){
 bool Uzytkownik::wczytajUzytkownikowProgramu (vector <Uzytkownik> &daneDoLogowania, int idUzytkownika){
 
     Uzytkownik osoba (0, "", "");
-    int nr_linii=idUzytkownika+1;
+    int nrLinii=idUzytkownika+1;
     int aktualnyNumer=1;
     int licznik = 0;
     string linia;
@@ -30,7 +30,7 @@ bool Uzytkownik::wczytajUzytkownikowProgramu (vector <Uzytkownik> &daneDoLogowan
 
     plik.open("Uzytkownicy.txt", ios::in);
     while (getline(plik,linia)){
-        if (aktualnyNumer == nr_linii){
+        if (aktualnyNumer == nrLinii){
             rekordPomocniczy = linia;
             for (int i = 0; i<rekordPomocniczy.length();i++){
                 if (rekordPomocniczy[i]!=124){
@@ -88,6 +88,7 @@ void Uzytkownik::rejestracja (vector <Uzytkownik> &daneDoLogowania) {
 
             cout <<"Podaj haslo: "<<endl;
             cin >> uzytkownikProgramu.haslo;
+            i=0;
         }else{
             i++;
         }
@@ -116,37 +117,33 @@ void Uzytkownik::zapiszUzytkownikowWPliku (Uzytkownik uzytkownikProgramu, vector
 }
 
 int Uzytkownik::logowanie (vector <Uzytkownik> &daneDoLogowania){
-    string login, haslo;
-    bool czyUdaloSieZalogowac = false;
-    cout << "LOGOWANIE"<<endl;
-    cout << "Wprowadz login: "<<endl;
-    cin >> login;
+    string login = "", haslo = "";
 
-    cout << "Wprowadz haslo: "<<endl;
-    cin >> haslo;
-
-    while (!daneDoLogowania.empty()){
-        for (vector <Uzytkownik>::iterator itr = daneDoLogowania.begin(); itr != daneDoLogowania.end();itr++){
-            if (itr -> login == login && itr -> haslo == haslo){
-                cout << "Login i haslo poprawne. Zalogowano uzytkownika nr "<<itr -> idUzytkownika;
-                Sleep(3000);
-                system("cls");
-                czyUdaloSieZalogowac=true;
-                return itr -> idUzytkownika;
-            }
-        }
-        if (czyUdaloSieZalogowac==false){
-            cout << "Blednie wprowadzone dane. Nie udalo sie zalogowac."<<endl;
-            Sleep(3000);
-            system ("cls");
-            cout << "Wprowadz login: "<<endl;
+    vector <Uzytkownik>::iterator itr = daneDoLogowania.begin();
+    for (int proby = 3; proby > 0; proby--){
+            cout << "LOGOWANIE."<<endl;
+            cout <<  "Podaj login: "<<endl;
             cin >> login;
 
-            cout << "Wprowadz haslo: "<<endl;
+            cout << "Podaj haslo: "<<endl;
             cin >> haslo;
-            vector <Uzytkownik>::iterator itr = daneDoLogowania.begin();
-        }
+
+            for (;itr != daneDoLogowania.end();itr++){
+                if (itr -> login == login && itr -> haslo == haslo){
+                    cout << endl << "Zalogowales sie." << endl << endl;
+                    system("pause");
+                    return itr -> idUzytkownika;
+                }
+            }
+                cout << "Blednie podany login i/lub haslo."<<endl;
+                cout <<"Pozostalo: "<<proby-1<<" proby."<<endl;
+                system("pause");
+                itr = daneDoLogowania.begin();
+                system("cls");
     }
+    cout << "Wprowadzono 3 razy bledne login i/lub haslo. Powrot do menu glownego." << endl;
+    system("pause");
+    return 0;
 }
 
 void Uzytkownik::zmianaHasla (vector <Uzytkownik> &daneDoLogowania, int idUzytkownika){

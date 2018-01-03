@@ -20,39 +20,60 @@ int main(){
     Adresat osobaZKsiazkiAdresowej(0,0,"","","","","");
     Uzytkownik osoba (0, "", "");
 
-    int wybor=0;
+    char wybor='0';
     int idUzytkownika=0;
+    int licznikUzytkownikow=0;
 
-    while (osoba.wczytajUzytkownikowProgramu(daneDoLogowania, idUzytkownika)==true){
-    idUzytkownika++;
+    while (osoba.wczytajUzytkownikowProgramu(daneDoLogowania, licznikUzytkownikow)==true){
+    licznikUzytkownikow++;
     }
 
 
-    while (1){
-        system ("cls");
-        cout << "Witaj w ksiazce adresowej. Co chcesz zrobic?"<<endl;
-        cout << "1. Logowanie"<<endl;
-        cout << "2. Rejestracja"<<endl;
-        cout << "3. Wyjscie"<<endl;
-        cin>>wybor;
+    while (true){
+        if (idUzytkownika==0){
+            system ("cls");
+            cout << "Witaj w ksiazce adresowej. Co chcesz zrobic?"<<endl;
+            cout << "1. Logowanie"<<endl;
+            cout << "2. Rejestracja"<<endl;
+            cout << "3. Wyjscie"<<endl;
+            cin>>wybor;
 
-        if (wybor == 1){
-            idUzytkownika = osoba.logowanie(daneDoLogowania);
-            osobaZKsiazkiAdresowej.wczytajOsobyZPlikuDlaDanegoUzytkownika(ksiazkaAdresowa, idUzytkownika);
-            while (idUzytkownika!=0){
+            switch (wybor){
+            case '1':
+                idUzytkownika = osoba.logowanie(daneDoLogowania);
+                osobaZKsiazkiAdresowej.wczytajOsobyZPlikuDlaDanegoUzytkownika(ksiazkaAdresowa, idUzytkownika);
+                break;
+            case '2':
+                osoba.rejestracja(daneDoLogowania);
+                break;
+            case '3':
+                cout << "Dziekuje za skorzystanie z ksiazki adresowej. Do zobaczenia."<<endl;
+                Sleep(2500);
+                exit(0);
+                break;
+            default:
+                cout << "Podano zly numer, wybierz ponownie."<<endl;
+                Sleep(2500);
+                break;
+            }
+        }
+
+        else if (idUzytkownika!=0){
                 system ("cls");
                 cout << "1. Wprowadzenie nowej osoby do ksiazki"<<endl;
                 cout << "2. Wyszukiwarka"<<endl;
                 cout << "3. Usuniecie osoby z ksiazki adresowej"<<endl;
                 cout << "4. Edytuj wybrany rekord"<<endl;
                 cout << "5. Zmien haslo"<<endl;
-                cout << "6. Wyloguj"<<endl;
+                cout << "9. Wyloguj"<<endl;
                 cin >> wybor;
-                if (wybor == 1){
+
+                switch (wybor){
+                case '1':
                     osobaZKsiazkiAdresowej.wprowadzanieNowychOsobDoKsiazki(ksiazkaAdresowa, idUzytkownika);
-                } else if (wybor == 2){
-                    while (1){
-                        int wybor2;
+                    break;
+                case '2':
+                    while (wybor!='9'){
                         system ("cls");
                         cout << "Wybierz rodzaj wyszukiwania"<<endl;
                         cout << "1. Wyszukiwanie po imieniu"<<endl;
@@ -60,49 +81,48 @@ int main(){
                         cout << "3. Pokaz cala ksiazke adresowa"<<endl;
                         cout << "9. Wroc do wczesniejszego menu"<<endl;
 
-                        cin >> wybor2;
-
-                        if (wybor2 == 1){
+                        cin >> wybor;
+                        switch (wybor){
+                        case '1':
                             osobaZKsiazkiAdresowej.wyszukiwaniePoImieniu (ksiazkaAdresowa);
-                        } else if (wybor2 == 2){
-                            osobaZKsiazkiAdresowej.wyszukiwaniePoNazwisku (ksiazkaAdresowa);
-                        } else if (wybor2 == 3){
-                            osobaZKsiazkiAdresowej.pokazWszystkich (ksiazkaAdresowa);
-                        } else if (wybor2 == 9){
                             break;
-                        }else {
-                            cout << "Podano zly numer, wybierz ponownie."<<endl;
-                            Sleep(2500);
+                        case '2':
+                            osobaZKsiazkiAdresowej.wyszukiwaniePoNazwisku (ksiazkaAdresowa);
+                            break;
+                        case '3':
+                            osobaZKsiazkiAdresowej.pokazWszystkich (ksiazkaAdresowa);
+                            break;
+                        case '9':
+                            break;
+                        default:
+                            cout << "Podano zly numer, wybierz ponownie: "<<endl;
+                            system ("Pause");
+                            break;
                         }
-                    }
-                } else if (wybor == 3){
+                   }
+                    break;
+                case '3':
                     osobaZKsiazkiAdresowej.usuwanieRekorduZPliku (ksiazkaAdresowa, idUzytkownika);
-                } else if (wybor == 4){
+                    break;
+                case '4':
                     osobaZKsiazkiAdresowej.edytujRekord(ksiazkaAdresowa, idUzytkownika);
-                } else if (wybor == 5){
+                    break;
+                case '5':
                     osoba.zmianaHasla(daneDoLogowania, idUzytkownika);
-                } else if (wybor == 6){
+                    break;
+                case '9':
                     idUzytkownika=0;
                     cout << "Wylogowano.";
                     Sleep(3000);
                     break;
-                } else {
+                default:
                     cout << "Podano zly numer, wybierz ponownie."<<endl;
                     Sleep(2500);
+                    break;
                 }
-            }
-        }  else if (wybor == 2){
-            osoba.rejestracja(daneDoLogowania);
-        }  else if (wybor == 3){
-            cout << "Dziekuje za skorzystanie z ksiazki adresowej. Do zobaczenia."<<endl;
-            Sleep(2500);
-            exit(0);
-        } else {
-            cout << "Podano zly numer, wybierz ponownie."<<endl;
-            Sleep(2500);
         }
     }
-    return 0;
+return 0;
 }
 
 

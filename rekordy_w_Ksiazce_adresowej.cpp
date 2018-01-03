@@ -23,7 +23,7 @@ Adresat::Adresat (int i,int iU, string im, string naz, string nrTel, string em, 
 
 void Adresat::wczytajOsobyZPlikuDlaDanegoUzytkownika (vector <Adresat> &ksiazkaAdresowa, int idUzytkownika){
     Adresat osobaZKsiazkiAdresowej (0,0,"","","","","");
-    int nr_linii=1;
+    int nrLinii=1;
     int licznik = 0;
     string linia;
     string rekordPomocniczy="";
@@ -35,7 +35,7 @@ void Adresat::wczytajOsobyZPlikuDlaDanegoUzytkownika (vector <Adresat> &ksiazkaA
     plik.open("Ksiazka_Adresowa.txt", ios::in);
 
     while (getline(plik,linia)){
-        switch(nr_linii){
+        switch(nrLinii){
         case 1:
             rekordPomocniczy = linia;
             for (int i = 0; i<rekordPomocniczy.length();i++){
@@ -78,16 +78,16 @@ void Adresat::wczytajOsobyZPlikuDlaDanegoUzytkownika (vector <Adresat> &ksiazkaA
             break;
 
         }
-        if (nr_linii==1 && osobaZKsiazkiAdresowej.idUzytkownika==idUzytkownika){
+        if (nrLinii==1 && osobaZKsiazkiAdresowej.idUzytkownika==idUzytkownika){
             ksiazkaAdresowa.push_back(osobaZKsiazkiAdresowej);
             licznik = 0;
-            nr_linii=0;
+            nrLinii=0;
         }
         else {
             licznik = 0;
-            nr_linii=0;
+            nrLinii=0;
         }
-        nr_linii++;
+        nrLinii++;
     }
     plik.close();
 }
@@ -165,7 +165,7 @@ int Adresat::okreslID (vector <Adresat> &ksiazkaAdresowa, int idUzytkownika){
 
 void Adresat::wczytajWszystkieOsobyZPliku (vector <Adresat> &ksiazkaAdresowa){
     Adresat osobaZKsiazkiAdresowej(0,0,"","","","","");
-    int nr_linii=1;
+    int nrLinii=1;
     int x=0;
     int licznik = 0;
     string linia;
@@ -178,7 +178,7 @@ void Adresat::wczytajWszystkieOsobyZPliku (vector <Adresat> &ksiazkaAdresowa){
     plik.open("Ksiazka_Adresowa.txt", ios::in);
 
     while (getline(plik,linia)){
-        switch(nr_linii){
+        switch(nrLinii){
         case 1:
             rekordPomocniczy = linia;
             for (int i = 0; i<rekordPomocniczy.length();i++){
@@ -221,12 +221,12 @@ void Adresat::wczytajWszystkieOsobyZPliku (vector <Adresat> &ksiazkaAdresowa){
             break;
 
         }
-        if (nr_linii==1){
+        if (nrLinii==1){
             ksiazkaAdresowa.push_back(osobaZKsiazkiAdresowej);
             licznik = 0;
-            nr_linii=0;
+            nrLinii=0;
         }
-        nr_linii++;
+        nrLinii++;
     }
     plik.close();
 }
@@ -355,23 +355,17 @@ void Adresat::usuwanieRekorduZPliku (vector <Adresat> &ksiazkaAdresowa, int idUz
     bool czyIstniejeAdresat = false;
 
     system("cls");
-    if (!ksiazkaAdresowa.empty())
-    {
+    if (!ksiazkaAdresowa.empty()){
         cout << "Podaj numer ID osoby do usuniecia: ";
         cin >> idUsuwanejOsoby;
 
-        if (cin.fail())
-        {
+        if (cin.fail()){
             cout << endl << "Wprowadzono niepoprawne dane. Powrot do menu glownego" << endl;
             cin.clear();
             cin.sync();
-        }
-        else
-        {
-            for (vector <Adresat>::iterator itr = ksiazkaAdresowa.begin(); itr != ksiazkaAdresowa.end(); itr++)
-            {
-                if (itr -> id == idUsuwanejOsoby)
-                {
+        } else {
+            for (vector <Adresat>::iterator itr = ksiazkaAdresowa.begin(); itr != ksiazkaAdresowa.end(); itr++){
+                if (itr -> id == idUsuwanejOsoby){
                     czyIstniejeAdresat = true;
                     cout << endl << endl << "Potwierdz naciskajac klawisz 't': ";
                     cin >> znak;
@@ -429,7 +423,7 @@ void Adresat::edytujRekord (vector <Adresat> &ksiazkaAdresowa, int idUzytkownika
 
     system("cls");
     if (!ksiazkaAdresowa.empty())
-    {   wczytajWszystkieOsobyZPliku (ksiazkaAdresowa);
+    {
         cout << "Podaj numer ID osoby do edycji: ";
         cin >> idWybranegoAdresata;
 
@@ -440,7 +434,7 @@ void Adresat::edytujRekord (vector <Adresat> &ksiazkaAdresowa, int idUzytkownika
             cin.sync();
         }
         else
-        {
+        {wczytajWszystkieOsobyZPliku (ksiazkaAdresowa);
             for (vector <Adresat>::iterator itr = ksiazkaAdresowa.begin(); itr <= ksiazkaAdresowa.end(); itr++)
             {
                 if (itr -> id == idWybranegoAdresata)
