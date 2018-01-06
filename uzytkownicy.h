@@ -11,19 +11,9 @@ using namespace std;
 
 class Uzytkownik{
 
+    public:
     int idUzytkownika;
     string login, haslo;
 
-    void zapiszUzytkownikowWPliku (Uzytkownik uzytkownikProgramu, vector <Uzytkownik> &daneDoLogowania);
-    void zapiszUzytkownikowWPlikuNadpisujacPlik (vector <Uzytkownik> &daneDoLogowania);
-
-    public:
-    Uzytkownik (int, string, string);
-    bool wczytajUzytkownikowProgramu (vector <Uzytkownik> &daneDoLogowania,  int idUzytkownika);
-    void rejestracja (vector <Uzytkownik> &daneDoLogowania);
-    int logowanie (vector <Uzytkownik> &daneDoLogowania);
-    void zmianaHasla (vector <Uzytkownik> &daneDoLogowania, int idUzytkownika);
-
-
-
+    Uzytkownik (int i, string log, string pas);
 };

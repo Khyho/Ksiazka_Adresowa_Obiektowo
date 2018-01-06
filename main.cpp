@@ -1,6 +1,6 @@
 #include <iostream>
-#include "uzytkownicy.h"
-#include "rekordy_w_Ksiazce_adresowej.h"
+#include "KsiazkaUzytkownikow.h"
+#include "KsiazkaAdresatow.h"
 #include <cstdlib>
 #include <windows.h>
 #include <cstdio>
@@ -17,8 +17,8 @@ int main(){
     vector <Adresat> ksiazkaAdresowa;
     vector <Uzytkownik> daneDoLogowania;
 
-    Adresat osobaZKsiazkiAdresowej(0,0,"","","","","");
-    Uzytkownik osoba (0, "", "");
+    KsiazkaAdresatow osobaZKsiazkiAdresowej(0,0,"","","","","");
+    KsiazkaUzytkownikow osoba(0,"","");
 
     char wybor='0';
     int idUzytkownika=0;
