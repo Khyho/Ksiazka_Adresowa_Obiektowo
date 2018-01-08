@@ -1,6 +1,6 @@
 #include <iostream>
-#include "KsiazkaUzytkownikow.h"
-#include "KsiazkaAdresatow.h"
+#include "UsersBook.h"
+#include "RecipientsBook.h"
 #include <cstdlib>
 #include <windows.h>
 #include <cstdio>
@@ -14,37 +14,37 @@ using namespace std;
 
 
 int main(){
-    vector <Adresat> ksiazkaAdresowa;
-    vector <Uzytkownik> daneDoLogowania;
+    vector <Recipient> addressBook;
+    vector <User> loginData;
 
-    KsiazkaAdresatow osobaZKsiazkiAdresowej(0,0,"","","","","");
-    KsiazkaUzytkownikow osoba(0,"","");
+    RecipientsBook personFromAddressBook(0,0,"","","","","");
+    UsersBook person(0,"","");
 
-    char wybor='0';
-    int idUzytkownika=0;
-    int licznikUzytkownikow=0;
+    char choice='0';
+    int userID=0;
+    int userCounter=0;
 
-    while (osoba.wczytajUzytkownikowProgramu(daneDoLogowania, licznikUzytkownikow)==true){
-    licznikUzytkownikow++;
+    while (person.loadProgramUsers(loginData, userCounter)==true){
+    userCounter++;
     }
 
 
     while (true){
-        if (idUzytkownika==0){
+        if (userID==0){
             system ("cls");
             cout << "Witaj w ksiazce adresowej. Co chcesz zrobic?"<<endl;
             cout << "1. Logowanie"<<endl;
             cout << "2. Rejestracja"<<endl;
             cout << "3. Wyjscie"<<endl;
-            cin>>wybor;
+            cin>>choice;
 
-            switch (wybor){
+            switch (choice){
             case '1':
-                idUzytkownika = osoba.logowanie(daneDoLogowania);
-                osobaZKsiazkiAdresowej.wczytajOsobyZPlikuDlaDanegoUzytkownika(ksiazkaAdresowa, idUzytkownika);
+                userID = person.log(loginData);
+                personFromAddressBook.loadPeopleFromAFileForTheLoggedinUser(addressBook, userID);
                 break;
             case '2':
-                osoba.rejestracja(daneDoLogowania);
+                person.registration(loginData);
                 break;
             case '3':
                 cout << "Dziekuje za skorzystanie z ksiazki adresowej. Do zobaczenia."<<endl;
@@ -58,7 +58,7 @@ int main(){
             }
         }
 
-        else if (idUzytkownika!=0){
+        else if (userID!=0){
                 system ("cls");
                 cout << "1. Wprowadzenie nowej osoby do ksiazki"<<endl;
                 cout << "2. Wyszukiwarka"<<endl;
@@ -66,14 +66,14 @@ int main(){
                 cout << "4. Edytuj wybrany rekord"<<endl;
                 cout << "5. Zmien haslo"<<endl;
                 cout << "9. Wyloguj"<<endl;
-                cin >> wybor;
+                cin >> choice;
 
-                switch (wybor){
+                switch (choice){
                 case '1':
-                    osobaZKsiazkiAdresowej.wprowadzanieNowychOsobDoKsiazki(ksiazkaAdresowa, idUzytkownika);
+                    personFromAddressBook.enteringNewRecipientsToTheAddressBook(addressBook, userID);
                     break;
                 case '2':
-                    while (wybor!='9'){
+                    while (choice!='9'){
                         system ("cls");
                         cout << "Wybierz rodzaj wyszukiwania"<<endl;
                         cout << "1. Wyszukiwanie po imieniu"<<endl;
@@ -81,16 +81,16 @@ int main(){
                         cout << "3. Pokaz cala ksiazke adresowa"<<endl;
                         cout << "9. Wroc do wczesniejszego menu"<<endl;
 
-                        cin >> wybor;
-                        switch (wybor){
+                        cin >> choice;
+                        switch (choice){
                         case '1':
-                            osobaZKsiazkiAdresowej.wyszukiwaniePoImieniu (ksiazkaAdresowa);
+                            personFromAddressBook.searchByName (addressBook);
                             break;
                         case '2':
-                            osobaZKsiazkiAdresowej.wyszukiwaniePoNazwisku (ksiazkaAdresowa);
+                            personFromAddressBook.searchBySurname (addressBook);
                             break;
                         case '3':
-                            osobaZKsiazkiAdresowej.pokazWszystkich (ksiazkaAdresowa);
+                            personFromAddressBook.viewAll (addressBook);
                             break;
                         case '9':
                             break;
@@ -102,16 +102,16 @@ int main(){
                    }
                     break;
                 case '3':
-                    osobaZKsiazkiAdresowej.usuwanieRekorduZPliku (ksiazkaAdresowa, idUzytkownika);
+                    personFromAddressBook.deletingRecord (addressBook, userID);
                     break;
                 case '4':
-                    osobaZKsiazkiAdresowej.edytujRekord(ksiazkaAdresowa, idUzytkownika);
+                    personFromAddressBook.editRecord(addressBook, userID);
                     break;
                 case '5':
-                    osoba.zmianaHasla(daneDoLogowania, idUzytkownika);
+                    person.passwordChange(loginData, userID);
                     break;
                 case '9':
-                    idUzytkownika=0;
+                    userID=0;
                     cout << "Wylogowano.";
                     Sleep(3000);
                     break;
